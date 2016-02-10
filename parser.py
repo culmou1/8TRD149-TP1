@@ -10,6 +10,6 @@ import utility
 #utility.memberNameWithBookName("The Unbearable Lightness of Being")
 
 # G)
-#utility.listeMembreAvecLivre()
+utility.listeMembreAvecLivre()
 
 # Dans le CSV Il n'y aucune donner qui represente l'année.

@@ -17,7 +17,7 @@ def getYear2012():  # Fonction qui retourne les livres sortis en 2012.
 
 def isBookAvailable(bookname):  # Fonction qui dit si le livre est disponible.
     dateInput = input("Entrez la date d'aujourd'hui (YYYY-MM-DD): \n")
-    dateInputConvertie = datetime.strptime(dateInput, "%Y-%M-%d")
+    dateInputConvertie = datetime.strptime(dateInput, "%Y-%m-%d")
     with open(bookStr, newline='', mode='r') as csvBook:  # csvBook <- bookStr
         readerbook = csv.DictReader(csvBook)
         for row in readerbook:
@@ -34,11 +34,11 @@ def isBookAvailable(bookname):  # Fonction qui dit si le livre est disponible.
                                 for row in readerBookLoad:
                                     if (row["CopyNo"] == bookCopyNo):  # À partir d'ici
                                         dateLivre= row["DateDue"]
-                                        dateLivreConvertie = datetime.strptime(dateLivre, "%Y-%M-%d")
-                                        # print(dateLivreConvertie)
-                                        # print(dateInputConvertie)
-                                        if dateLivreConvertie > dateInputConvertie:
-                                            print("La copie du livre: %s"%bookname, bookCopyNo, "est disponible.")
+                                        dateLivreConvertie = datetime.strptime(dateLivre, "%Y-%m-%d")
+                                        print("Date due du libre {0}: \n".format(dateLivreConvertie))
+                                        print("Date entrer par l\'utilisateur : {0} \n".format(dateInputConvertie))
+                                        if dateLivreConvertie < dateInputConvertie:
+                                            print("La copie du livre: %s"%bookname, bookCopyNo, "est disponible. \n")
 
                                             # Comment simplement printer une copie?
 
@@ -69,19 +69,23 @@ def memberNameWithBookName(bookname):
 
 def listeMembreAvecLivre():
     dateInput = input("Entrez la date d'aujourd'hui (YYYY-MM-DD): \n")
-    dateInputConvertie = datetime.strptime(dateInput, "%Y-%M-%d")
+    dateInputConvertie = datetime.strptime(dateInput, "%Y-%m-%d")
+    print("Date Input convertie: {0}\n".format(dateInputConvertie))
+    print("Date Input: {0}\n".format(dateInput))
     with open(bookLoadStr, newline='', mode='r') as csvBookLoad:
         readerBookLoad = csv.DictReader(csvBookLoad)
         for row in readerBookLoad:
-             date= row["DateDue"]
-             dateConvertie = datetime.strptime(date, "%Y-%M-%d")
-             #print(dateConvertie)
-             if dateConvertie > dateInputConvertie:
+             dateDue = row["DateDue"]
+             dateOut = row["DateOut"]
+             dateDueConvertie = datetime.strptime(dateDue, "%Y-%m-%d")
+             dateOutConvertie = datetime.strptime(dateOut, "%Y-%m-%d")
+             if (dateOutConvertie < dateInputConvertie and dateDueConvertie > dateInputConvertie):
+                 print("Voici les dates dateOut : {0}, {1} \n Voici les dates dues : {2}, {3} \n".format(dateOutConvertie,dateInputConvertie,dateDueConvertie,dateInputConvertie))
                  borrower = row["BorrowerNo"]
                  with open(borrowerStr, newline='', mode='r') as csvBorrower:
                     readerBorrower = csv.DictReader(csvBorrower)
                     for row in readerBorrower:
-                        if (row["BorrowerNo"] == borrower):
+                        if (row["BorrowerNo"] == str(446)):
                             print(row["BorrowerName"])
 
 
